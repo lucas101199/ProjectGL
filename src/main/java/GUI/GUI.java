@@ -13,10 +13,11 @@ public class GUI extends Frame {
     public ArrayList<JButton> button_floor;
 
     public GUI() {
+        button_floor = new ArrayList<>();
 
         frame = new JFrame("Elevator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 1200);
+        frame.setSize(1000, 1200);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
@@ -26,8 +27,6 @@ public class GUI extends Frame {
         button_group.setSize(300, 1200);
 
         //Buttons for the elevator
-        JButton rr = new JButton("1");
-        button_group.add(rr);
 
         frame.getContentPane().add(button_group);
         frame.pack();
