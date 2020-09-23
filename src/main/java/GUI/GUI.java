@@ -7,10 +7,10 @@ import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GUI extends Frame {
+public class GUI extends JFrame {
 
-    public JFrame frame;
-    public JPanel button_group, screen;
+    public JPanel button_group;
+    public JLabel screen;
     public GridBagConstraints gbc_button;
     public ArrayList<JButton> button_floor;
     public JButton emergency;
@@ -19,38 +19,62 @@ public class GUI extends Frame {
         button_floor = new ArrayList<>();
         Border blackLine = BorderFactory.createLineBorder(Color.BLACK);
 
-        frame = new JFrame("Elevator");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 1200);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(new GridBagLayout());
+        setTitle("Elevator");
 
-        gbc_button = new GridBagConstraints();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setLayout(new GridBagLayout());
+
         button_group = new JPanel();
-        button_group.setLayout(new GridBagLayout());
-        //button_group.setBorder(blackLine);
-        button_group.setSize(300, 800);
-        gbc_button.gridwidth = GridBagConstraints.REMAINDER;
-
+        button_group.setLayout(new BoxLayout(button_group, BoxLayout.Y_AXIS));
         //emergency stop button
-        emergency = new JButton("stop");
-        button_group.add(emergency, gbc_button);
 
         //Screen with the floor
-        screen = new JPanel();
+        screen = new JLabel();
         screen.setBorder(blackLine);
-        screen.setSize(300, 200);
+        screen.setText("RDC");
+        screen.setPreferredSize(new Dimension(200, 100));
+        screen.setHorizontalAlignment(JLabel.CENTER);
+        screen.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
+        button_group.add(screen);
 
-        //add all the components to the frame
-        frame.getContentPane().add(screen, gbc_button);
-        frame.getContentPane().add(button_group, gbc_button);
-        frame.setVisible(true);
+        emergency = new JButton("Emergency Stop");
+        emergency.setPreferredSize(new Dimension(300, 30));
+        button_group.add(emergency);
+
+        gbc_button = new GridBagConstraints();
+        gbc_button.fill = GridBagConstraints.HORIZONTAL;
+        gbc_button.gridx = 0;
+        gbc_button.gridy = 0;
+        gbc_button.weightx = 1;
+        gbc_button.weighty = 1;
+        gbc_button.insets = new Insets(0, 50,0,50);
+        gbc_button.gridwidth = 2;
+        add(button_group, gbc_button);
+
+        var simulation_part = new JPanel();
+        simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.PAGE_AXIS));
+        var button = new JButton("Call From Floor 0");
+        button.setPreferredSize(new Dimension(300,100));
+        simulation_part.add(button);
+        button = new JButton("Call From Floor 1");
+        simulation_part.add(button);
+        var c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 2;
+        c.gridy = 0;
+        c.weightx = 1;
+        c.weighty = 1;
+        add(simulation_part, c);
+        setVisible(true);
     }
 
     public void add_Button(String name_button) {
-        JButton name = new JButton(name_button);
-        button_floor.add(name);
-        button_group.add(name, gbc_button);
+        JButton button = new JButton(name_button);
+        button.setPreferredSize(new Dimension(300,30));
+        button_floor.add(button);
+        button_group.add(button);
         button_group.updateUI();
     }
 }
