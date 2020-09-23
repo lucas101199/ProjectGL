@@ -15,6 +15,7 @@ public class GUI extends JFrame {
     public GridBagConstraints gbc_button;
     public ArrayList<JButton> button_floor;
     public JButton emergency;
+    private JComboBox floorQueries;
 
     public GUI() {
         button_floor = new ArrayList<>();
@@ -23,11 +24,28 @@ public class GUI extends JFrame {
         setTitle("Elevator");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
+        setSize(450, 350);
         setLocationRelativeTo(null);
         setLayout(new GridBagLayout());
 
+        var statePanel = new JPanel();
+        statePanel.setBorder(BorderFactory.createTitledBorder("Elevator State"));
+        statePanel.setLayout(new BoxLayout(statePanel, BoxLayout.X_AXIS));
+        var state = new JLabel("WAITING");
+        state.setBorder(blackLine);
+        state.setHorizontalAlignment(JLabel.CENTER);
+        state.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
+        statePanel.add(state);
+
+        var constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.weighty = 0.5;
+        getContentPane().add(statePanel, constraints);
+
         button_group = new JPanel();
+        button_group.setBorder(BorderFactory.createTitledBorder("Elevator View"));
         button_group.setLayout(new BoxLayout(button_group, BoxLayout.Y_AXIS));
         //emergency stop button
 
@@ -47,20 +65,32 @@ public class GUI extends JFrame {
         gbc_button = new GridBagConstraints();
         gbc_button.fill = GridBagConstraints.BOTH;
         gbc_button.gridx = 0;
-        gbc_button.gridy = 0;
+        gbc_button.gridy = 1;
         gbc_button.weightx = 0.5;
-        gbc_button.insets = new Insets(0, 50,0,50);
-        gbc_button.gridwidth = 2;
-        gbc_button.ipadx = 500;
+        gbc_button.insets = new Insets(0, 0,0,50);
         add(button_group, gbc_button);
 
         simulation_part = new JPanel();
-        simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.PAGE_AXIS));
+        floorQueries = new JComboBox<String>();
+        floorQueries.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        var directionRequested = new JComboBox<String>();
+        directionRequested.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        directionRequested.addItem("Up ʌ");
+        directionRequested.addItem("Down v");
 
+        var validateButton = new JButton("Send Query");
+        simulation_part.setBorder(BorderFactory.createTitledBorder("Floor Queries"));
+        simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.Y_AXIS));
+        simulation_part.add(floorQueries);
+        simulation_part.add(directionRequested);
+        validateButton.setAlignmentX(JButton.LEFT);
+        validateButton.setMaximumSize(new Dimension(500, 30));
+        simulation_part.add(validateButton);
+        add(Box.createHorizontalGlue());
         var c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        c.gridx = 2;
-        c.gridy = 0;
+        c.gridx = 1;
+        c.gridy = 1;
         add(simulation_part, c);
         setVisible(true);
     }
@@ -70,8 +100,7 @@ public class GUI extends JFrame {
         button.setMaximumSize(new Dimension(150,button.getMinimumSize().height));
         button_floor.add(button);
         button_group.add(button);
-        button = new JButton("Call From Floor "+ name_button);
-        simulation_part.add(button);
+        floorQueries.addItem("Call from floor " + name_button);
         button_group.updateUI();
     }
 }
