@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame {
 
-    public JPanel button_group;
+    public JPanel button_group,simulation_part;
     public JLabel screen;
     public GridBagConstraints gbc_button;
     public ArrayList<JButton> button_floor;
@@ -34,47 +35,43 @@ public class GUI extends JFrame {
         screen = new JLabel();
         screen.setBorder(blackLine);
         screen.setText("RDC");
-        screen.setPreferredSize(new Dimension(200, 100));
         screen.setHorizontalAlignment(JLabel.CENTER);
         screen.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
+        screen.setMaximumSize(new Dimension(150, screen.getMinimumSize().height));
         button_group.add(screen);
 
         emergency = new JButton("Emergency Stop");
-        emergency.setPreferredSize(new Dimension(300, 30));
+        emergency.setMaximumSize(new Dimension(150,emergency.getMinimumSize().height));
         button_group.add(emergency);
 
         gbc_button = new GridBagConstraints();
-        gbc_button.fill = GridBagConstraints.HORIZONTAL;
+        gbc_button.fill = GridBagConstraints.BOTH;
         gbc_button.gridx = 0;
         gbc_button.gridy = 0;
-        gbc_button.weightx = 1;
-        gbc_button.weighty = 1;
+        gbc_button.weightx = 0.5;
         gbc_button.insets = new Insets(0, 50,0,50);
         gbc_button.gridwidth = 2;
+        gbc_button.ipadx = 500;
         add(button_group, gbc_button);
 
-        var simulation_part = new JPanel();
+        simulation_part = new JPanel();
         simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.PAGE_AXIS));
-        var button = new JButton("Call From Floor 0");
-        button.setPreferredSize(new Dimension(300,100));
-        simulation_part.add(button);
-        button = new JButton("Call From Floor 1");
-        simulation_part.add(button);
+
         var c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
         c.gridx = 2;
         c.gridy = 0;
-        c.weightx = 1;
-        c.weighty = 1;
         add(simulation_part, c);
         setVisible(true);
     }
 
     public void add_Button(String name_button) {
         JButton button = new JButton(name_button);
-        button.setPreferredSize(new Dimension(300,30));
+        button.setMaximumSize(new Dimension(150,button.getMinimumSize().height));
         button_floor.add(button);
         button_group.add(button);
+        button = new JButton("Call From Floor "+ name_button);
+        simulation_part.add(button);
         button_group.updateUI();
     }
 }
