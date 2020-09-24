@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame {
 
-    public JPanel button_group,simulation_part;
-    public JLabel screen;
-    public GridBagConstraints gbc_button;
+    public JPanel button_group,simulation_part, statePanel;
+    public JLabel screen, state;
+    public GridBagConstraints gbc_button, constraints, c;
     public ArrayList<JButton> button_floor;
-    public JButton emergency;
-    private JComboBox floorQueries;
+    public JButton emergency, validateButton;
+    private JComboBox<String> floorQueries;
 
     public GUI() {
         button_floor = new ArrayList<>();
@@ -28,16 +28,16 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new GridBagLayout());
 
-        var statePanel = new JPanel();
+        statePanel = new JPanel();
         statePanel.setBorder(BorderFactory.createTitledBorder("Elevator State"));
         statePanel.setLayout(new BoxLayout(statePanel, BoxLayout.X_AXIS));
-        var state = new JLabel("WAITING");
+        state = new JLabel("WAITING");
         state.setBorder(blackLine);
         state.setHorizontalAlignment(JLabel.CENTER);
         state.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
         statePanel.add(state);
 
-        var constraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -47,7 +47,6 @@ public class GUI extends JFrame {
         button_group = new JPanel();
         button_group.setBorder(BorderFactory.createTitledBorder("Elevator View"));
         button_group.setLayout(new BoxLayout(button_group, BoxLayout.Y_AXIS));
-        //emergency stop button
 
         //Screen with the floor
         screen = new JLabel();
@@ -58,8 +57,10 @@ public class GUI extends JFrame {
         screen.setMaximumSize(new Dimension(150, screen.getMinimumSize().height));
         button_group.add(screen);
 
+        //emergency stop button
         emergency = new JButton("Emergency Stop");
         emergency.setMaximumSize(new Dimension(150,emergency.getMinimumSize().height));
+        emergency.addActionListener(new EventHandler_emergencyStop());
         button_group.add(emergency);
 
         gbc_button = new GridBagConstraints();
@@ -78,7 +79,8 @@ public class GUI extends JFrame {
         directionRequested.addItem("Up ʌ");
         directionRequested.addItem("Down v");
 
-        var validateButton = new JButton("Send Query");
+        validateButton = new JButton("Send Query");
+        validateButton.addActionListener(new EventHandler_queries(floorQueries, directionRequested));
         simulation_part.setBorder(BorderFactory.createTitledBorder("Floor Queries"));
         simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.Y_AXIS));
         simulation_part.add(floorQueries);
@@ -87,7 +89,7 @@ public class GUI extends JFrame {
         validateButton.setMaximumSize(new Dimension(500, 30));
         simulation_part.add(validateButton);
         add(Box.createHorizontalGlue());
-        var c = new GridBagConstraints();
+        c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 1;
@@ -97,6 +99,7 @@ public class GUI extends JFrame {
 
     public void add_Button(String name_button) {
         JButton button = new JButton(name_button);
+        button.addActionListener(new EventHandler_floor(name_button));
         button.setMaximumSize(new Dimension(150,button.getMinimumSize().height));
         button_floor.add(button);
         button_group.add(button);
