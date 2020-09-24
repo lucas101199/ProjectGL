@@ -15,7 +15,7 @@ public class GUI extends JFrame {
     public GridBagConstraints gbc_button, constraints, c;
     public ArrayList<JButton> button_floor;
     public JButton emergency, validateButton;
-    private JComboBox floorQueries;
+    private JComboBox<String> floorQueries;
 
     public GUI() {
         button_floor = new ArrayList<>();
@@ -47,7 +47,6 @@ public class GUI extends JFrame {
         button_group = new JPanel();
         button_group.setBorder(BorderFactory.createTitledBorder("Elevator View"));
         button_group.setLayout(new BoxLayout(button_group, BoxLayout.Y_AXIS));
-        //emergency stop button
 
         //Screen with the floor
         screen = new JLabel();
@@ -58,6 +57,7 @@ public class GUI extends JFrame {
         screen.setMaximumSize(new Dimension(150, screen.getMinimumSize().height));
         button_group.add(screen);
 
+        //emergency stop button
         emergency = new JButton("Emergency Stop");
         emergency.setMaximumSize(new Dimension(150,emergency.getMinimumSize().height));
         emergency.addActionListener(new EventHandler_emergencyStop());
