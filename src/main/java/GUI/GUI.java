@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame {
 
-    public JPanel button_group,simulation_part;
-    public JLabel screen;
-    public GridBagConstraints gbc_button;
+    public JPanel button_group,simulation_part, statePanel;
+    public JLabel screen, state;
+    public GridBagConstraints gbc_button, constraints, c;
     public ArrayList<JButton> button_floor;
-    public JButton emergency;
+    public JButton emergency, validateButton;
     private JComboBox floorQueries;
 
     public GUI() {
@@ -28,16 +28,16 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new GridBagLayout());
 
-        var statePanel = new JPanel();
+        statePanel = new JPanel();
         statePanel.setBorder(BorderFactory.createTitledBorder("Elevator State"));
         statePanel.setLayout(new BoxLayout(statePanel, BoxLayout.X_AXIS));
-        var state = new JLabel("WAITING");
+        state = new JLabel("WAITING");
         state.setBorder(blackLine);
         state.setHorizontalAlignment(JLabel.CENTER);
         state.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
         statePanel.add(state);
 
-        var constraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -78,7 +78,7 @@ public class GUI extends JFrame {
         directionRequested.addItem("Up ʌ");
         directionRequested.addItem("Down v");
 
-        var validateButton = new JButton("Send Query");
+        validateButton = new JButton("Send Query");
         simulation_part.setBorder(BorderFactory.createTitledBorder("Floor Queries"));
         simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.Y_AXIS));
         simulation_part.add(floorQueries);
@@ -87,7 +87,7 @@ public class GUI extends JFrame {
         validateButton.setMaximumSize(new Dimension(500, 30));
         simulation_part.add(validateButton);
         add(Box.createHorizontalGlue());
-        var c = new GridBagConstraints();
+        c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 1;
