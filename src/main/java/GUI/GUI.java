@@ -60,6 +60,7 @@ public class GUI extends JFrame {
 
         emergency = new JButton("Emergency Stop");
         emergency.setMaximumSize(new Dimension(150,emergency.getMinimumSize().height));
+        emergency.addActionListener(new EventHandler_emergencyStop());
         button_group.add(emergency);
 
         gbc_button = new GridBagConstraints();
@@ -79,6 +80,7 @@ public class GUI extends JFrame {
         directionRequested.addItem("Down v");
 
         validateButton = new JButton("Send Query");
+        validateButton.addActionListener(new EventHandler_queries(floorQueries.getSelectedIndex(), directionRequested.getSelectedIndex()));
         simulation_part.setBorder(BorderFactory.createTitledBorder("Floor Queries"));
         simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.Y_AXIS));
         simulation_part.add(floorQueries);
@@ -97,6 +99,7 @@ public class GUI extends JFrame {
 
     public void add_Button(String name_button) {
         JButton button = new JButton(name_button);
+        button.addActionListener(new EventHandler_floor(name_button));
         button.setMaximumSize(new Dimension(150,button.getMinimumSize().height));
         button_floor.add(button);
         button_group.add(button);
