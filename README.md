@@ -1,2 +1,2 @@
 # ProjectGL
-Creation of a control command for an elevator with a GUI
+Creation of a command control for an elevator with a GUI
