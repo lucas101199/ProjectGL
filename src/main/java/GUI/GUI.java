@@ -80,7 +80,7 @@ public class GUI extends JFrame {
         directionRequested.addItem("Down v");
 
         validateButton = new JButton("Send Query");
-        validateButton.addActionListener(new EventHandler_queries(floorQueries.getSelectedIndex(), directionRequested.getSelectedIndex()));
+        validateButton.addActionListener(new EventHandler_queries(floorQueries, directionRequested));
         simulation_part.setBorder(BorderFactory.createTitledBorder("Floor Queries"));
         simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.Y_AXIS));
         simulation_part.add(floorQueries);

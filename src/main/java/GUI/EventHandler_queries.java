@@ -1,19 +1,20 @@
 package GUI;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class EventHandler_queries implements EventHandler {
 
-    public int floor, direction;
+    public JComboBox<String> floor, direction;
 
-    public EventHandler_queries(int floor, int direction) {
+    public EventHandler_queries(JComboBox<String> floor, JComboBox<String> direction) {
         this.floor = floor;
         this.direction = direction;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //System.out.println(floor);
-        //System.out.println(direction);
+        System.out.println(floor.getSelectedIndex());
+        System.out.println(direction.getSelectedIndex());
     }
 }
