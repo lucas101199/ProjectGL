@@ -1,4 +1,4 @@
-package command_control;
+package operative_part;
 
 public enum State_engine {
     UP,
