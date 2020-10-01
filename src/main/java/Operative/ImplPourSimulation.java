@@ -1,21 +1,34 @@
 package Operative;
 
+import CC.ControleCommande;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class ImplPourSimulation implements InterfaceMaterielle{
-    private Timer t;
-    private  boolean enMontee, enDescente, estStoppe;
+    private Timer temporisateur;
     private EtatMoteur etat;
+    private ControleCommande controleComm;
+
     public enum EtatMoteur{
         enMontee,
         enDescente,
         estStoppe
     }
 
+    public ImplPourSimulation(){
+        etat = EtatMoteur.estStoppe;
+    }
+    public ImplPourSimulation(double tpsDistEtage , double tpsRalentissement){
+
+    }
+
     @Override
     public void monter() {
-        etat = EtatMoteur.enMontee;
+        if(etat == EtatMoteur.enDescente)
+            arreterUrgence();
+        else
+            etat = EtatMoteur.enMontee;
     }
 
     @Override
@@ -33,7 +46,8 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     }
 
     @Override
-    public void arretetProchainNiveau() {
+    public void arreterProchainNiveau() {
+        controleComm.mettreAJourEtage();
         etat = EtatMoteur.estStoppe;
     }
 
@@ -50,6 +64,10 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     //Pour tester le bon fonctionnement du matériel
     public EtatMoteur getEtatMoteur(){
         return  etat;
+    }
+
+    public void setControleCommande(ControleCommande cc){
+        controleComm = cc;
     }
 
 
