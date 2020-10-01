@@ -72,21 +72,19 @@ public class GUI extends JFrame {
 
         simulation_part = new JPanel();
         floorQueries = new JComboBox<String>();
-        floorQueries.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        floorQueries.setMaximumSize(new Dimension(300, 50));
         var directionRequested = new JComboBox<String>();
-        directionRequested.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        directionRequested.setMaximumSize(new Dimension(300, 50));
         directionRequested.addItem("Up ʌ");
         directionRequested.addItem("Down v");
 
         var validateButton = new JButton("Send Query");
         simulation_part.setBorder(BorderFactory.createTitledBorder("Floor Queries"));
-        simulation_part.setLayout(new BoxLayout(simulation_part, BoxLayout.Y_AXIS));
+        simulation_part.setLayout(new GridLayout(3,1));
         simulation_part.add(floorQueries);
         simulation_part.add(directionRequested);
-        validateButton.setAlignmentX(JButton.LEFT);
-        validateButton.setMaximumSize(new Dimension(500, 30));
+        validateButton.setMaximumSize(new Dimension(300, 50));
         simulation_part.add(validateButton);
-        add(Box.createHorizontalGlue());
         var c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
