@@ -1,11 +1,13 @@
 package Operative;
-import CC.ControleCommande;
+import CC.CommandControl;
+
+
 public interface InterfaceMaterielle {
-    void monter();
-    void descendre();
-    void arreterUrgence();
-    void arreterProchainNiveau();
-    void envoyerSignalPretAPartir();
-    void envoyerSignalEtagePasse();
-    void setControleCommande(ControleCommande cc);
+    void Up();
+    void Down();
+    void emergencyStop();
+    void stopNextFloor();
+    void sendReadyToGo();
+    void sendFloorPassed();
+    void setCommandControl(CommandControl cc);
 }
