@@ -1,6 +1,7 @@
 package GUI;
 
 import CC.FakeCommandControl;
+import CC.Query;
 import Operative.ImplPourSimulation;
 
 public class GUI_CC {
@@ -14,5 +15,7 @@ public class GUI_CC {
         this.cc = new FakeCommandControl(simulation);
     }
 
-
+    public void emergency_Stop() {
+        cc.Stop();
+    }
 }

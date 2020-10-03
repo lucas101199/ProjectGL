@@ -1,16 +1,27 @@
 package CC;
 
-import java.util.HashMap;
 
-public class Query {
+public class Query implements Comparable<Query> {
 
-    private HashMap<String, String> field = new HashMap<>();
+    public String floor;
+    public String direction;
 
-    public void addField(String nameField, String instruction){
-        field.put(nameField, instruction);
+
+    public Query(String floor, String direction) {
+        this.floor = floor;
+        this.direction = direction;
     }
 
-    public String getInstruction(String nameField){
-        return field.get(nameField);
+    public String getFloor() {
+        return floor;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    @Override
+    public int compareTo(Query o) {
+        return 0;
     }
 }
