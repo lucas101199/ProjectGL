@@ -12,6 +12,6 @@ public class EventHandler_emergencyStop implements EventHandler{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        gui_cc.emergency_Stop();
     }
 }

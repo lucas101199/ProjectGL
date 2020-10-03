@@ -33,12 +33,12 @@ public class TestImplSimulation {
         ImplPourSimulation elevator = new ImplPourSimulation();
         FakeCommandControl fakeControlCommand = new FakeCommandControl(elevator);
         Query queryNextFloor = new Query();
-        queryNextFloor.addField("Order", "NextFloor");
+        queryNextFloor.addInstruction("Order", "NextFloor");
         fakeControlCommand.handleQuery(queryNextFloor);
         Assert.assertEquals(0, fakeControlCommand.getFloor());
 
         Query queryUp = new Query();
-        queryUp.addField("Order", "Up");
+        queryUp.addInstruction("Order", "Up");
         fakeControlCommand.handleQuery(queryUp);
         fakeControlCommand.handleQuery(queryNextFloor);
         Assert.assertEquals(1, fakeControlCommand.getFloor());
