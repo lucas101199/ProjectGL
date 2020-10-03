@@ -10,14 +10,17 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame {
 
-    public JPanel button_group,simulation_part;
+    public JPanel button_group,simulation_part, statePanel;
     public JLabel screen;
     public GridBagConstraints gbc_button;
     public ArrayList<JButton> button_floor;
     public JButton emergency;
-    private JComboBox floorQueries;
+    private JComboBox<String> floorQueries, directionRequested;
+    public GUI_CC gui_cc;
 
-    public GUI() {
+    public GUI(GUI_CC gui_cc) {
+
+        this.gui_cc = gui_cc;
         button_floor = new ArrayList<>();
         Border blackLine = BorderFactory.createLineBorder(Color.BLACK);
 
@@ -28,16 +31,16 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new GridBagLayout());
 
-        var statePanel = new JPanel();
+        statePanel = new JPanel();
         statePanel.setBorder(BorderFactory.createTitledBorder("Elevator State"));
         statePanel.setLayout(new BoxLayout(statePanel, BoxLayout.X_AXIS));
-        var state = new JLabel("WAITING");
+        JLabel state = new JLabel("WAITING");
         state.setBorder(blackLine);
         state.setHorizontalAlignment(JLabel.CENTER);
         state.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
         statePanel.add(state);
 
-        var constraints = new GridBagConstraints();
+        GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -71,21 +74,21 @@ public class GUI extends JFrame {
         add(button_group, gbc_button);
 
         simulation_part = new JPanel();
-        floorQueries = new JComboBox<String>();
+        floorQueries = new JComboBox<>();
         floorQueries.setMaximumSize(new Dimension(300, 50));
-        var directionRequested = new JComboBox<String>();
+        directionRequested = new JComboBox<>();
         directionRequested.setMaximumSize(new Dimension(300, 50));
         directionRequested.addItem("Up ʌ");
         directionRequested.addItem("Down v");
 
-        var validateButton = new JButton("Send Query");
+        JButton validateButton = new JButton("Send Query");
         simulation_part.setBorder(BorderFactory.createTitledBorder("Floor Queries"));
         simulation_part.setLayout(new GridLayout(3,1));
         simulation_part.add(floorQueries);
         simulation_part.add(directionRequested);
         validateButton.setMaximumSize(new Dimension(300, 50));
         simulation_part.add(validateButton);
-        var c = new GridBagConstraints();
+        GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 1;

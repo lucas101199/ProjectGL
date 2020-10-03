@@ -1,43 +1,47 @@
 package TestsUnitaires;
-import CC.FakeControleCommande;
-import CC.Requete;
+
+import CC.FakeCommandControl;
+import CC.Query;
+import Operative.StateEngine;
 import org.junit.*;
 import Operative.ImplPourSimulation;
+
+
 public class TestImplSimulation {
 
     @Test
-    public void testMonter(){
-        var ascenceur = new ImplPourSimulation();
-        ascenceur.monter();
-        Assert.assertEquals(ImplPourSimulation.EtatMoteur.enMontee, ascenceur.getEtatMoteur());
-        ascenceur.descendre();
-        Assert.assertEquals(ImplPourSimulation.EtatMoteur.estStoppe, ascenceur.getEtatMoteur());
+    public void testUp(){
+        var elevator = new ImplPourSimulation();
+        elevator.Up();
+        Assert.assertEquals(StateEngine.goingUp, elevator.getStateEngine());
+        elevator.Down();
+        Assert.assertEquals(StateEngine.Stopped, elevator.getStateEngine());
 
     }
 
     @Test
-    public void testDescendre(){
-        var ascenceur = new ImplPourSimulation();
-        ascenceur.descendre();
-        Assert.assertEquals(ImplPourSimulation.EtatMoteur.enDescente, ascenceur.getEtatMoteur());
-        ascenceur.monter();
-        Assert.assertEquals(ImplPourSimulation.EtatMoteur.estStoppe, ascenceur.getEtatMoteur());
+    public void testDown(){
+        ImplPourSimulation elevator = new ImplPourSimulation();
+        elevator.Down();
+        Assert.assertEquals(StateEngine.goingDown, elevator.getStateEngine());
+        elevator.Up();
+        Assert.assertEquals(StateEngine.Stopped, elevator.getStateEngine());
     }
 
     @Test
-    public void testArretProchainEtage(){
-        var ascenceur = new ImplPourSimulation();
-        var fakeControlCommand = new FakeControleCommande(ascenceur);
-        var requetePrchEtage = new Requete();
-        requetePrchEtage.ajouterChamp("Ordre", "ProchainEtage");
-        fakeControlCommand.traiterReq(requetePrchEtage);
-        Assert.assertEquals(0,fakeControlCommand.getEtage());
+    public void testStopNextFloor(){
+        ImplPourSimulation elevator = new ImplPourSimulation();
+        FakeCommandControl fakeControlCommand = new FakeCommandControl(elevator);
+        Query queryNextFloor = new Query();
+        queryNextFloor.addField("Order", "NextFloor");
+        fakeControlCommand.handleQuery(queryNextFloor);
+        Assert.assertEquals(0, fakeControlCommand.getFloor());
 
-        var requeteMonter = new Requete();
-        requeteMonter.ajouterChamp("Ordre", "Monter");
-        fakeControlCommand.traiterReq(requeteMonter);
-        fakeControlCommand.traiterReq(requetePrchEtage);
-        Assert.assertEquals(1, fakeControlCommand.getEtage());
+        Query queryUp = new Query();
+        queryUp.addField("Order", "Up");
+        fakeControlCommand.handleQuery(queryUp);
+        fakeControlCommand.handleQuery(queryNextFloor);
+        Assert.assertEquals(1, fakeControlCommand.getFloor());
 
     }
 }

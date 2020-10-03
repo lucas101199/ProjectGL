@@ -1,73 +1,67 @@
 package Operative;
 
-import CC.ControleCommande;
-
+import CC.CommandControl;
 import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class ImplPourSimulation implements InterfaceMaterielle{
     private Timer temporisateur;
-    private EtatMoteur etat;
-    private ControleCommande controleComm;
+    private StateEngine state;
+    private CommandControl commandControl;
 
-    public enum EtatMoteur{
-        enMontee,
-        enDescente,
-        estStoppe
-    }
 
     public ImplPourSimulation(){
-        etat = EtatMoteur.estStoppe;
+        state = StateEngine.Stopped;
     }
+
     public ImplPourSimulation(double tpsDistEtage , double tpsRalentissement){
 
     }
 
     @Override
-    public void monter() {
-        if(etat == EtatMoteur.enDescente)
-            arreterUrgence();
+    public void Up() {
+        if(state == StateEngine.goingDown)
+            emergencyStop();
         else
-            etat = EtatMoteur.enMontee;
+            state = StateEngine.goingUp;
     }
 
     @Override
-    public void descendre() {
-        if(etat == EtatMoteur.enMontee)
-            arreterUrgence();
+    public void Down() {
+        if(state == StateEngine.goingUp)
+            emergencyStop();
         else
-            etat = EtatMoteur.enDescente;
+            state = StateEngine.goingDown;
+    }
+
+    @Override
+    public void emergencyStop() {
+        state = StateEngine.Stopped;
+    }
+
+    @Override
+    public void stopNextFloor() {
+        commandControl.updateFloor();
+        state = StateEngine.Stopped;
+    }
+
+    @Override
+    public void sendReadyToGo() {
 
     }
 
     @Override
-    public void arreterUrgence() {
-        etat = EtatMoteur.estStoppe;
-    }
-
-    @Override
-    public void arreterProchainNiveau() {
-        controleComm.mettreAJourEtage();
-        etat = EtatMoteur.estStoppe;
-    }
-
-    @Override
-    public void envoyerSignalPretAPartir() {
-
-    }
-
-    @Override
-    public void envoyerSignalEtagePasse() {
+    public void sendFloorPassed() {
 
     }
 
     //Pour tester le bon fonctionnement du matériel
-    public EtatMoteur getEtatMoteur(){
-        return  etat;
+    public StateEngine getStateEngine(){
+        return state;
     }
 
-    public void setControleCommande(ControleCommande cc){
-        controleComm = cc;
+    public void setCommandControl(CommandControl cc){
+        commandControl = cc;
     }
 
 
