@@ -1,7 +1,6 @@
 package CC;
-import Operative.ImplPourSimulation;
 
-import java.util.HashMap;
+import Operative.ImplPourSimulation;
 import java.util.PriorityQueue;
 
 
@@ -26,6 +25,11 @@ public class FakeCommandControl implements  CommandControl{
 
     public void Stop() {
         direction = Direction.Stop;
+    }
+
+    public String directionElevator(int arrivalFloor) {
+        if (arrivalFloor > numFloor) return "Up";
+        return "Down";
     }
 
     @Override

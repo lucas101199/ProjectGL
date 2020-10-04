@@ -18,4 +18,14 @@ public class GUI_CC {
     public void emergency_Stop() {
         cc.Stop();
     }
+
+    public void sendQuery(String floor, String direction) {
+        cc.addQuery(new Query(floor, direction));
+    }
+
+    public void send_Query(String floor) {
+        String direction = cc.directionElevator(Integer.parseInt(floor));
+        cc.addQuery(new Query(floor, direction));
+    }
+
 }

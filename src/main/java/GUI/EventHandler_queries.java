@@ -16,7 +16,6 @@ public class EventHandler_queries implements EventHandler {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(floor.getSelectedIndex());
-        System.out.println(direction.getSelectedIndex());
+        
     }
 }
