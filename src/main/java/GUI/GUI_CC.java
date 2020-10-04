@@ -16,6 +16,6 @@ public class GUI_CC {
     }
 
     public void emergency_Stop() {
-        cc.Stop();
+        cc.handleQuery(new Query(true));
     }
 }

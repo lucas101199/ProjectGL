@@ -1,27 +1,17 @@
 package CC;
 
 
-public class Query implements Comparable<Query> {
+public class Query {
 
-    public String floor;
-    public String direction;
+    public int floor;
+    public boolean isEmergencyStop;
 
-
-    public Query(String floor, String direction) {
+    public Query(int floor) {
         this.floor = floor;
-        this.direction = direction;
     }
 
-    public String getFloor() {
-        return floor;
+    public Query(boolean emergencyStop){
+        isEmergencyStop = emergencyStop;
     }
 
-    public String getDirection() {
-        return direction;
-    }
-
-    @Override
-    public int compareTo(Query o) {
-        return 0;
-    }
 }

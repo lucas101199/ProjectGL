@@ -10,39 +10,30 @@ public class FakeCommandControl implements  CommandControl{
     private final ImplPourSimulation elevator;
     private int numFloor;
     private Direction direction;
-    public PriorityQueue<Query> Instructions;
+    public PriorityQueue<Query> queriesReceived;
 
     public FakeCommandControl(ImplPourSimulation elevator){
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
         numFloor = 0;
         direction = Direction.Stop;
-        this.Instructions = new PriorityQueue<>();
-    }
-
-    public void addQuery(Query cc) {
-        Instructions.add(cc);
-    }
-
-    public void Stop() {
-        direction = Direction.Stop;
+        this.queriesReceived = new PriorityQueue<>();
     }
 
     @Override
-    public void handleQuery(Query req) {
-
-        /*switch (order) {
-            case "Up" -> {
+    public void handleQuery(Query query) {
+        if(!query.isEmergencyStop){
+            if(query.floor > numFloor){
                 elevator.Up();
                 direction = Direction.Up;
             }
-            case "Down" -> {
+            else if(query.floor < numFloor){
                 elevator.Down();
                 direction = Direction.Down;
             }
-            case "NextFloor" -> elevator.stopNextFloor();
-            default -> elevator.emergencyStop();
-        }*/
+        }
+        else
+            direction = Direction.Stop;
     }
 
     @Override
@@ -62,4 +53,9 @@ public class FakeCommandControl implements  CommandControl{
     public State getState() {
         return null;
     }
+
+    public void setDirection(Direction direc){
+        direction = direc;
+    }
+
 }
