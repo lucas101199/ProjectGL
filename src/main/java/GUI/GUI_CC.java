@@ -2,6 +2,7 @@ package GUI;
 
 import CC.FakeCommandControl;
 import CC.Query;
+import CC.State;
 import Operative.ImplPourSimulation;
 
 public class GUI_CC {
@@ -21,11 +22,19 @@ public class GUI_CC {
 
     public void sendQuery(String floor, String direction) {
         cc.addQuery(new Query(floor, direction));
+        displayFloor();
     }
 
     public void send_Query(String floor) {
         String direction = cc.directionElevator(Integer.parseInt(floor));
         cc.addQuery(new Query(floor, direction));
+        displayFloor();
     }
 
+    public void displayFloor() {
+        while (cc.getState() != State.Stopped) {
+            int floor = cc.getFloor();
+            gui.displayFloor(floor);
+        }
+    }
 }

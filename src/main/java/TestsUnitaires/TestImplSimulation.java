@@ -10,7 +10,7 @@ import Operative.ImplPourSimulation;
 public class TestImplSimulation {
 
     @Test
-    public void testUp(){
+    public void testUp() {
         var elevator = new ImplPourSimulation();
         elevator.Up();
         Assert.assertEquals(StateEngine.goingUp, elevator.getStateEngine());
@@ -20,7 +20,7 @@ public class TestImplSimulation {
     }
 
     @Test
-    public void testDown(){
+    public void testDown() {
         ImplPourSimulation elevator = new ImplPourSimulation();
         elevator.Down();
         Assert.assertEquals(StateEngine.goingDown, elevator.getStateEngine());
@@ -28,7 +28,7 @@ public class TestImplSimulation {
         Assert.assertEquals(StateEngine.Stopped, elevator.getStateEngine());
     }
 
-    @Test
+    /*@Test
     public void testStopNextFloor(){
         ImplPourSimulation elevator = new ImplPourSimulation();
         FakeCommandControl fakeControlCommand = new FakeCommandControl(elevator);
@@ -42,6 +42,5 @@ public class TestImplSimulation {
         fakeControlCommand.handleQuery(queryUp);
         fakeControlCommand.handleQuery(queryNextFloor);
         Assert.assertEquals(1, fakeControlCommand.getFloor());
-
-    }
+    }*/
 }

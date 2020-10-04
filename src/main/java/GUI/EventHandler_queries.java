@@ -16,6 +16,6 @@ public class EventHandler_queries implements EventHandler {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        gui_cc.sendQuery(String.valueOf(floor.getSelectedIndex()), String.valueOf(direction.getSelectedIndex()));
     }
 }

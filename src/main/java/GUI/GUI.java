@@ -88,6 +88,7 @@ public class GUI extends JFrame {
         simulation_part.add(floorQueries);
         simulation_part.add(directionRequested);
         validateButton.setMaximumSize(new Dimension(300, 50));
+        validateButton.addActionListener(new EventHandler_queries(floorQueries, directionRequested, gui_cc));
         simulation_part.add(validateButton);
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -105,5 +106,9 @@ public class GUI extends JFrame {
         button_group.add(button);
         floorQueries.addItem("Call from floor " + name_button);
         button_group.updateUI();
+    }
+
+    public void displayFloor(int numFloor) {
+        screen.setText(String.valueOf(numFloor));
     }
 }
