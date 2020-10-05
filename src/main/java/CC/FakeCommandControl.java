@@ -9,18 +9,18 @@ public class FakeCommandControl implements  CommandControl{
     private final ImplPourSimulation elevator;
     private int numFloor;
     private Direction direction;
-    public PriorityQueue<Query> Instructions;
+    public PriorityQueue<Query> queriesReceived;
 
     public FakeCommandControl(ImplPourSimulation elevator){
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
         numFloor = 0;
         direction = Direction.Stop;
-        this.Instructions = new PriorityQueue<>();
+        this.queriesReceived = new PriorityQueue<>();
     }
 
     public void addQuery(Query cc) {
-        Instructions.add(cc);
+        queriesReceived.add(cc);
     }
 
     public void Stop() {
@@ -45,7 +45,7 @@ public class FakeCommandControl implements  CommandControl{
             }
         }
         else
-            direction = Direction.Stop;
+            Stop();
     }
 
     @Override
