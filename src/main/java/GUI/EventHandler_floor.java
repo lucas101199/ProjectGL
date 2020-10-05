@@ -14,7 +14,6 @@ public class EventHandler_floor implements EventHandler {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int num_floor = Integer.parseInt(floor);
-        //System.out.println(num_floor);
+        gui_cc.send_Query(Integer.parseInt(floor));
     }
 }

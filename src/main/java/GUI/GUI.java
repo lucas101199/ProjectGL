@@ -62,7 +62,8 @@ public class GUI extends JFrame {
         button_group.add(screen);
 
         emergency = new JButton("Emergency Stop");
-        emergency.setMaximumSize(new Dimension(150,emergency.getMinimumSize().height));
+        emergency.setMaximumSize(new Dimension(150, emergency.getMinimumSize().height));
+        emergency.addActionListener(new EventHandler_emergencyStop(gui_cc));
         button_group.add(emergency);
 
         gbc_button = new GridBagConstraints();
@@ -87,6 +88,7 @@ public class GUI extends JFrame {
         simulation_part.add(floorQueries);
         simulation_part.add(directionRequested);
         validateButton.setMaximumSize(new Dimension(300, 50));
+        validateButton.addActionListener(new EventHandler_queries(floorQueries, directionRequested, gui_cc));
         simulation_part.add(validateButton);
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -99,9 +101,14 @@ public class GUI extends JFrame {
     public void add_Button(String name_button) {
         JButton button = new JButton(name_button);
         button.setMaximumSize(new Dimension(150,button.getMinimumSize().height));
+        button.addActionListener(new EventHandler_floor(name_button, gui_cc));
         button_floor.add(button);
         button_group.add(button);
         floorQueries.addItem("Call from floor " + name_button);
         button_group.updateUI();
+    }
+
+    public void displayFloor(int numFloor) {
+        screen.setText(String.valueOf(numFloor));
     }
 }

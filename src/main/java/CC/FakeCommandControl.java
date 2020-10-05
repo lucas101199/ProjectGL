@@ -1,7 +1,6 @@
 package CC;
-import Operative.ImplPourSimulation;
 
-import java.util.HashMap;
+import Operative.ImplPourSimulation;
 import java.util.PriorityQueue;
 
 
@@ -10,14 +9,27 @@ public class FakeCommandControl implements  CommandControl{
     private final ImplPourSimulation elevator;
     private int numFloor;
     private Direction direction;
-    public PriorityQueue<Query> queriesReceived;
+    public PriorityQueue<Query> Instructions;
 
     public FakeCommandControl(ImplPourSimulation elevator){
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
         numFloor = 0;
         direction = Direction.Stop;
-        this.queriesReceived = new PriorityQueue<>();
+        this.Instructions = new PriorityQueue<>();
+    }
+
+    public void addQuery(Query cc) {
+        Instructions.add(cc);
+    }
+
+    public void Stop() {
+        direction = Direction.Stop;
+    }
+
+    public String directionElevator(int arrivalFloor) {
+        if (arrivalFloor > numFloor) return "Up";
+        return "Down";
     }
 
     @Override
@@ -57,5 +69,4 @@ public class FakeCommandControl implements  CommandControl{
     public void setDirection(Direction direc){
         direction = direc;
     }
-
 }

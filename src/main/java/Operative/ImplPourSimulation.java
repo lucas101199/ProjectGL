@@ -42,8 +42,8 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     /**
     @param : vSpeed, approachSpeed are in meters per second and must be positive.
      **/
-    public ImplPourSimulation(double vSpeed , double approachSpeed, double distanceBetweenFloor){
-        assert vSpeed > 0  && approachSpeed > 0 && distanceBetweenFloor > 0: "Error parameter muste be > 0";
+    public ImplPourSimulation(double vSpeed , double approachSpeed, double distanceBetweenFloor) {
+        assert vSpeed > 0 && approachSpeed > 0 && distanceBetweenFloor > 0 : "Error parameter muste be > 0";
         state = StateEngine.Stopped;
         _vSpeed = vSpeed / 1000;
         _approachSpeed = approachSpeed / 1000;
@@ -53,6 +53,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         coolDown = new Timer();
         _currentFloor = 0;
     }
+
 
     @Override
     public void Up() {
