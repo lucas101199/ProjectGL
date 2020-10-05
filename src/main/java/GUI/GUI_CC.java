@@ -20,13 +20,13 @@ public class GUI_CC {
         cc.Stop();
     }
 
-    public void sendQuery(String floor, String direction) {
+    public void sendQuery(int floor, String direction) {
         cc.addQuery(new Query(floor, direction));
         displayFloor();
     }
 
-    public void send_Query(String floor) {
-        String direction = cc.directionElevator(Integer.parseInt(floor));
+    public void send_Query(int floor) {
+        String direction = cc.directionElevator(floor);
         cc.addQuery(new Query(floor, direction));
         displayFloor();
     }

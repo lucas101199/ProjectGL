@@ -33,20 +33,19 @@ public class FakeCommandControl implements  CommandControl{
     }
 
     @Override
-    public void handleQuery(Query req) {
-
-        /*switch (order) {
-            case "Up" -> {
+    public void handleQuery(Query query) {
+        if(!query.isEmergencyStop){
+            if(query.floor > numFloor){
                 elevator.Up();
                 direction = Direction.Up;
             }
-            case "Down" -> {
+            else if(query.floor < numFloor){
                 elevator.Down();
                 direction = Direction.Down;
             }
-            case "NextFloor" -> elevator.stopNextFloor();
-            default -> elevator.emergencyStop();
-        }*/
+        }
+        else
+            direction = Direction.Stop;
     }
 
     @Override
@@ -65,5 +64,9 @@ public class FakeCommandControl implements  CommandControl{
     @Override
     public State getState() {
         return null;
+    }
+
+    public void setDirection(Direction direc){
+        direction = direc;
     }
 }
