@@ -9,7 +9,7 @@ public class GUI_CC {
 
     GUI gui;
     FakeCommandControl cc;
-    ImplPourSimulation simulation = new ImplPourSimulation();
+    ImplPourSimulation simulation = new ImplPourSimulation(2, 0.5, 6);
 
     public GUI_CC() {
         this.gui = new GUI(this);

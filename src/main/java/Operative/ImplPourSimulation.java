@@ -34,11 +34,6 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         }
     }
 
-
-    public ImplPourSimulation(){
-        state = StateEngine.Stopped;
-    }
-
     /**
     @param : vSpeed, approachSpeed are in meters per second and must be positive.
      **/
