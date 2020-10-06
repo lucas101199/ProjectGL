@@ -12,11 +12,11 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     private Timer coolDown;
     private StateEngine state;
     private CommandControl commandControl;
-    private double _vSpeed;
-    private double _approachSpeed;
-    private double _distanceBtwFloor;
+    private final double _vSpeed;
+    private final double _approachSpeed;
+    private final double _distanceBtwFloor;
     private double distanceEllapsed;
-    private long resfreshDelay;
+    private final long resfreshDelay;
     private int _currentFloor;
 
     private class GoingUpDownAction extends TimerTask{
@@ -24,7 +24,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         public void run() {
             distanceEllapsed += _vSpeed * resfreshDelay;
             System.out.println(distanceEllapsed);
-            if((int)(distanceEllapsed / _distanceBtwFloor) != _currentFloor) {
+            if((int) (distanceEllapsed / _distanceBtwFloor) != _currentFloor) {
                 commandControl.updateFloor();
                 if(state == StateEngine.goingUp)
                     _currentFloor++;
@@ -48,7 +48,6 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         coolDown = new Timer();
         _currentFloor = 0;
     }
-
 
     @Override
     public void Up() {
@@ -87,7 +86,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
                 _currentFloor++;
             else if(state == StateEngine.goingDown)
                 _currentFloor--;
-            var distanceRemaining =Math.abs(_currentFloor * _distanceBtwFloor - distanceEllapsed);
+            var distanceRemaining = Math.abs(_currentFloor * _distanceBtwFloor - distanceEllapsed);
             var time = distanceRemaining / _approachSpeed;
             System.out.println("Temps restant :" + time);
             try{

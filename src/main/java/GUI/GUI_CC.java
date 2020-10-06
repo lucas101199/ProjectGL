@@ -1,5 +1,6 @@
 package GUI;
 
+import CC.Direction;
 import CC.FakeCommandControl;
 import CC.Query;
 import CC.State;
@@ -7,34 +8,30 @@ import Operative.ImplPourSimulation;
 
 public class GUI_CC {
 
-    GUI gui;
-    FakeCommandControl cc;
-    ImplPourSimulation simulation = new ImplPourSimulation(2, 0.5, 6);
+    static GUI gui;
+    static FakeCommandControl cc;
+    ImplPourSimulation simulation = new ImplPourSimulation(3, 3, 6);
 
     public GUI_CC() {
-        this.gui = new GUI(this);
-        this.cc = new FakeCommandControl(simulation);
+        gui = new GUI(this);
+        cc = new FakeCommandControl(simulation);
     }
 
     public void emergency_Stop() {
-        cc.handleQuery(new Query(true));
+        cc.EmergencyStop();
     }
 
     public void sendQuery(int floor, String direction) {
         cc.addQuery(new Query(floor, direction));
-        displayFloor();
     }
 
     public void send_Query(int floor) {
         String direction = cc.directionElevator(floor);
         cc.addQuery(new Query(floor, direction));
-        displayFloor();
     }
 
-    public void displayFloor() {
-        while (cc.getState() != State.Stopped) {
-            int floor = cc.getFloor();
-            gui.displayFloor(floor);
-        }
+    public static void displayFloor() {
+        int floor = cc.getFloor();
+        gui.displayFloor(floor);
     }
 }

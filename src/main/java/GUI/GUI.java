@@ -55,7 +55,7 @@ public class GUI extends JFrame {
         //Screen with the floor
         screen = new JLabel();
         screen.setBorder(blackLine);
-        screen.setText("RDC");
+        screen.setText("0");
         screen.setHorizontalAlignment(JLabel.CENTER);
         screen.setFont(new Font(Font.DIALOG, Font.BOLD, 40));
         screen.setMaximumSize(new Dimension(150, screen.getMinimumSize().height));
@@ -110,5 +110,6 @@ public class GUI extends JFrame {
 
     public void displayFloor(int numFloor) {
         screen.setText(String.valueOf(numFloor));
+        screen.updateUI();
     }
 }

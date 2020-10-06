@@ -1,6 +1,10 @@
 package CC;
 
+import GUI.GUI_CC;
 import Operative.ImplPourSimulation;
+import org.w3c.dom.events.EventListener;
+
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 
@@ -10,6 +14,7 @@ public class FakeCommandControl implements  CommandControl{
     private int numFloor;
     private Direction direction;
     public PriorityQueue<Query> queriesReceived;
+    final Thread t;
 
     public FakeCommandControl(ImplPourSimulation elevator){
         this.elevator = elevator;
@@ -17,6 +22,8 @@ public class FakeCommandControl implements  CommandControl{
         numFloor = 0;
         direction = Direction.Stop;
         this.queriesReceived = new PriorityQueue<>();
+        t = new Thread(this::handleQuery);
+        t.start();
     }
 
     public void addQuery(Query cc) {
@@ -27,33 +34,46 @@ public class FakeCommandControl implements  CommandControl{
         direction = Direction.Stop;
     }
 
+    public void EmergencyStop() {
+        Stop();
+        elevator.emergencyStop();
+    }
+
     public String directionElevator(int arrivalFloor) {
         if (arrivalFloor > numFloor) return "Up";
         return "Down";
     }
 
     @Override
-    public void handleQuery(Query query) {
-        if(!query.isEmergencyStop){
-            if(query.floor > numFloor){
-                elevator.Up();
-                direction = Direction.Up;
-            }
-            else if(query.floor < numFloor){
-                elevator.Down();
-                direction = Direction.Down;
+    public void handleQuery() {
+        while (true) {
+            if (direction == Direction.Stop) {
+                System.out.println(numFloor);
+                if (!queriesReceived.isEmpty()) {
+                    if (queriesReceived.peek().floor > numFloor) {
+                        elevator.Up();
+                        direction = Direction.Up;
+                    } else if (queriesReceived.peek().floor < numFloor) {
+                        elevator.Down();
+                        direction = Direction.Down;
+                    }
+                } else
+                    Stop();
             }
         }
-        else
-            Stop();
+        //Stop();
     }
 
     @Override
     public void updateFloor() {
-        if(direction == Direction.Up)
+        if(direction == Direction.Up) {
             numFloor++;
-        else if(direction == Direction.Down)
+            GUI_CC.displayFloor();
+        }
+        else if(direction == Direction.Down) {
             numFloor--;
+            GUI_CC.displayFloor();
+        }
     }
 
     @Override
