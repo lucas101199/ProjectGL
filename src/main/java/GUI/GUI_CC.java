@@ -12,7 +12,6 @@ public class GUI_CC {
 
     public GUI_CC() {
         this.gui = new GUI(this);
-        this.cc = new FakeCommandControl(simulation);
     }
 
     public void emergency_Stop() {

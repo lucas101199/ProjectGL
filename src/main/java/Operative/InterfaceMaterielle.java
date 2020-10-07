@@ -7,7 +7,5 @@ public interface InterfaceMaterielle {
     void Down();
     void emergencyStop();
     void stopNextFloor();
-    void sendReadyToGo();
-    void sendFloorPassed();
     void setCommandControl(CommandControl cc);
 }
