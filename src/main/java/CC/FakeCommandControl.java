@@ -16,12 +16,12 @@ public class FakeCommandControl implements  CommandControl{
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
         numFloor = initFloor;
-        direction = Direction.Stop;
+        direction = Direction.None;
         this.queriesReceived = new PriorityQueue<>();
     }
 
     @Override
-    public void handleQuery(Query query) {
+    public void handleEvent(Event event) {
         /*
         while (true) {
             if (direction == Direction.Stop) {
