@@ -1,8 +1,8 @@
 package CC;
-
 import Operative.ImplPourSimulation;
+
+import java.util.HashMap;
 import java.util.PriorityQueue;
-import GUI.GUI_CC;
 
 
 public class FakeCommandControl implements  CommandControl{
@@ -16,17 +16,13 @@ public class FakeCommandControl implements  CommandControl{
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
         numFloor = initFloor;
-        direction = Direction.Stop;
+        direction = Direction.None;
         this.queriesReceived = new PriorityQueue<>();
     }
 
-    public String directionElevator(int floor) {
-        if (numFloor < floor) return "Up";
-        return "Down";
-    }
-
     @Override
-    public void handleQuery(Query query) {
+    public void handleEvent(Event event) {
+        /*
         while (true) {
             if (direction == Direction.Stop) {
                 System.out.println(numFloor);
@@ -39,21 +35,21 @@ public class FakeCommandControl implements  CommandControl{
                         direction = Direction.Down;
                     }
                 } else
-                    setDirection(Direction.Stop);
+                    Stop();
             }
         }
-        //Stop();
+        //Stop();*/
     }
 
     @Override
     public void updateFloor() {
         if(direction == Direction.Up) {
             numFloor++;
-            GUI_CC.displayFloor();
+            // GUI_CC.displayFloor();
         }
         else if(direction == Direction.Down) {
             numFloor--;
-            GUI_CC.displayFloor();
+            // GUI_CC.displayFloor();
         }
     }
 

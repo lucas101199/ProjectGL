@@ -3,26 +3,34 @@ package CC;
 
 public class Query implements Comparable<Query> {
 
-    public int floor;
-    public String direction;
-    public boolean isEmergencyStop;
+    private int _floor;
+    private Direction _direction;
+    private boolean _isEmergencyStop;
 
-    public Query(int floor, String direction) {
-        this.floor = floor;
-        this.direction = direction;
+    public Query(int floor) {
+        _floor = floor;
+        _direction = Direction.None;
+        _isEmergencyStop = false;
+    }
+
+    public Query(int floor, Direction direction){
+        _floor = floor;
+        _direction = direction;
+        _isEmergencyStop = false;
+    }
+
+    public Query(boolean isEmergencyStop){
+        _isEmergencyStop = true;
     }
 
     public int getFloor() {
-        return floor;
+        return _floor;
     }
 
-    public String getDirection() {
-        return direction;
+    public Direction getDirection() {
+        return _direction;
     }
 
-    public Query(boolean emergencyStop){
-        isEmergencyStop = emergencyStop;
-    }
 
     @Override
     public int compareTo(Query o) {

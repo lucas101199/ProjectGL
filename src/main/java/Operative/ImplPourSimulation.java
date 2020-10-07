@@ -20,7 +20,6 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     private int _currentFloor;
     private  TimerTask _currentTask;
     private int _nbOfFloor;
-    private int _initialFloor;
 
     private class GoingUpDownAction extends TimerTask{
         @Override
@@ -43,9 +42,6 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     }
 
 
-    public ImplPourSimulation(){
-        state = StateEngine.Stopped;
-    }
 
     /**
     @param : vSpeed, approachSpeed are in meters per second and must be positive.
@@ -93,9 +89,9 @@ public class ImplPourSimulation implements InterfaceMaterielle{
 
     @Override
     public void emergencyStop() {
-        coolDown.cancel();
+        _currentTask.cancel();
         coolDown.purge();
-        state = StateEngine.Stopped;
+        state = StateEngine.Blocked;
     }
 
     @Override
@@ -144,7 +140,6 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     }
 
     void updateFloor(){
-        assert state != StateEngine.Stopped;
         if(state == StateEngine.goingUp) {
             _currentFloor++;
             commandControl.updateFloor();
