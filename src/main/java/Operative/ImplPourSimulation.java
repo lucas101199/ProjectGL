@@ -12,11 +12,11 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     private Timer coolDown;
     private StateEngine state;
     private CommandControl commandControl;
-    private double _vSpeed;
-    private double _approachSpeed;
-    private double _distanceBtwFloor;
+    private  double _vSpeed ;
+    private  double _approachSpeed;
+    private  double _distanceBtwFloor;
     private double distanceEllapsed;
-    private long resfreshDelay;
+    private  long resfreshDelay;
     private int _currentFloor;
     private  TimerTask _currentTask;
     private int _nbOfFloor;

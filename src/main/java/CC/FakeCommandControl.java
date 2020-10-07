@@ -12,37 +12,45 @@ public class FakeCommandControl implements  CommandControl{
     private Direction direction;
     public PriorityQueue<Query> queriesReceived;
 
-    public FakeCommandControl(ImplPourSimulation elevator, int initFloor){
+    public FakeCommandControl(ImplPourSimulation elevator){
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
         numFloor = 0;
         direction = Direction.Stop;
         this.queriesReceived = new PriorityQueue<>();
-        numFloor = initFloor;
     }
 
     @Override
     public void handleQuery(Query query) {
-        if(!query.isEmergencyStop){
-            if(query.floor > numFloor){
-                elevator.Up();
-                direction = Direction.Up;
-            }
-            else if(query.floor < numFloor){
-                elevator.Down();
-                direction = Direction.Down;
+        /*
+        while (true) {
+            if (direction == Direction.Stop) {
+                System.out.println(numFloor);
+                if (!queriesReceived.isEmpty()) {
+                    if (queriesReceived.peek().floor > numFloor) {
+                        elevator.Up();
+                        direction = Direction.Up;
+                    } else if (queriesReceived.peek().floor < numFloor) {
+                        elevator.Down();
+                        direction = Direction.Down;
+                    }
+                } else
+                    Stop();
             }
         }
-        else
-            direction = Direction.Stop;
+        //Stop();*/
     }
 
     @Override
     public void updateFloor() {
-        if(direction == Direction.Up)
+        if(direction == Direction.Up) {
             numFloor++;
-        else if(direction == Direction.Down)
+           // GUI_CC.displayFloor();
+        }
+        else if(direction == Direction.Down) {
             numFloor--;
+           // GUI_CC.displayFloor();
+        }
     }
 
     @Override
