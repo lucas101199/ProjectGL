@@ -12,10 +12,10 @@ public class FakeCommandControl implements  CommandControl{
     private Direction direction;
     public PriorityQueue<Query> queriesReceived;
 
-    public FakeCommandControl(ImplPourSimulation elevator){
+    public FakeCommandControl(ImplPourSimulation elevator, int initFloor){
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
-        numFloor = 0;
+        numFloor = initFloor;
         direction = Direction.Stop;
         this.queriesReceived = new PriorityQueue<>();
     }

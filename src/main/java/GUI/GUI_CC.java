@@ -10,24 +10,24 @@ public class GUI_CC {
 
     static GUI gui;
     static FakeCommandControl cc;
-    ImplPourSimulation simulation = new ImplPourSimulation(3, 3, 6);
+    ImplPourSimulation simulation = new ImplPourSimulation(3, 3, 6,5,0);
 
     public GUI_CC() {
         gui = new GUI(this);
-        cc = new FakeCommandControl(simulation);
+        cc = new FakeCommandControl(simulation, 0);
     }
 
     public void emergency_Stop() {
-        cc.EmergencyStop();
+        //cc.EmergencyStop();
     }
 
     public void sendQuery(int floor, String direction) {
-        cc.addQuery(new Query(floor, direction));
+        //cc.addQuery(new Query(floor, direction));
     }
 
-    public void send_Query(int floor) {
+    public void send_Query(int floor) {/*
         String direction = cc.directionElevator(floor);
-        cc.addQuery(new Query(floor, direction));
+        cc.addQuery(new Query(floor, direction));*/
     }
 
     public static void displayFloor() {
