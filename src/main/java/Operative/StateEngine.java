@@ -3,5 +3,6 @@ package Operative;
 public enum StateEngine {
     goingUp,
     goingDown,
-    Stopped
+    Stopped,
+    Blocked
 }
