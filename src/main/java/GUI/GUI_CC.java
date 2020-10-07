@@ -3,14 +3,13 @@ package GUI;
 import CC.Direction;
 import CC.FakeCommandControl;
 import CC.Query;
-import CC.State;
 import Operative.ImplPourSimulation;
 
 public class GUI_CC {
 
     static GUI gui;
     static FakeCommandControl cc;
-    ImplPourSimulation simulation = new ImplPourSimulation(3, 3, 6,5,0);
+    ImplPourSimulation simulation = new ImplPourSimulation(0.7, 0.5, 5,5,0);
 
     public GUI_CC() {
         gui = new GUI(this);
@@ -18,16 +17,16 @@ public class GUI_CC {
     }
 
     public void emergency_Stop() {
-        //cc.EmergencyStop();
+        cc.setDirection(Direction.Stop);
     }
 
     public void sendQuery(int floor, String direction) {
-        //cc.addQuery(new Query(floor, direction));
+        cc.queriesReceived.add(new Query(floor, direction));
     }
 
-    public void send_Query(int floor) {/*
+    public void send_Query(int floor) {
         String direction = cc.directionElevator(floor);
-        cc.addQuery(new Query(floor, direction));*/
+        cc.queriesReceived.add(new Query(floor, direction));
     }
 
     public static void displayFloor() {
