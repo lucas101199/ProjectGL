@@ -1,7 +1,9 @@
 package Operative;
 
+import CC.CCState;
 import CC.CommandControl;
 import CC.Direction;
+import CC.Event;
 
 import java.util.Random;
 import java.util.Timer;
@@ -123,6 +125,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
                 e.printStackTrace();
             }
             DoorsIsClosed = true;
+            commandControl.handleEvent(Event.READY_TO_GO);
         }).start();
     }
 
