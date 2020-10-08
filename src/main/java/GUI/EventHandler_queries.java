@@ -14,6 +14,11 @@ public class EventHandler_queries implements EventHandler {
         this.gui_cc = gui_cc;
     }
 
+    /**
+     *
+     * @param e
+     * Is trigger when a new query need to be created
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         gui_cc.sendQuery(floor.getSelectedIndex(), String.valueOf(direction.getSelectedIndex()));

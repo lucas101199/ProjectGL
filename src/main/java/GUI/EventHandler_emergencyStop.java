@@ -10,6 +10,11 @@ public class EventHandler_emergencyStop implements EventHandler{
         this.gui_cc = gui_cc;
     }
 
+    /**
+     *
+     * @param e
+     * Is trigger when an emergency stop action is needed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         gui_cc.emergency_Stop();

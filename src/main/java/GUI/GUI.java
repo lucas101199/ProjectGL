@@ -60,7 +60,7 @@ public class GUI extends JFrame {
 
         emergency = new JButton("Emergency Stop");
         emergency.setMaximumSize(new Dimension(150, emergency.getMinimumSize().height));
-        emergency.addActionListener(new EventHandler_emergencyStop(gui_cc));
+        emergency.addActionListener(new  EventHandler_emergencyStop(gui_cc));
         button_group.add(emergency);
 
         gbc_button = new GridBagConstraints();

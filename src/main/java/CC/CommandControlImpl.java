@@ -5,6 +5,7 @@ import Operative.InterfaceMaterielle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
 public class CommandControlImpl implements CommandControl{
@@ -51,10 +52,20 @@ public class CommandControlImpl implements CommandControl{
 
     }
 
+    public Direction DirectionElevator(int floor) {
+        if (floor < _floor) return Direction.Down;
+        return Direction.Up;
+    }
+
+    public Direction DirElevator(String direction) {
+        if (direction.equals("Up")) return Direction.Up;
+        return Direction.Down;
+    }
+
     @Override
     public void handleEvent(Event event) {
-        var connectionsToState = _stateEventTable.get(_state);
-        for(var c : connectionsToState){
+        ArrayList<Connection> connectionsToState = _stateEventTable.get(_state);
+        for(Connection c : connectionsToState){
             if(c.event == event)
                 c.action.accept(event.userQuery);
         }
