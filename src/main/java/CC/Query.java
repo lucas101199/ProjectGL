@@ -17,7 +17,7 @@ public class Query implements Comparable<Query> {
      *
      * @param floor
      * @param direction
-     * Create a
+     * Create a new query
      */
     public Query(int floor, Direction direction){
         _floor = floor;
@@ -45,7 +45,6 @@ public class Query implements Comparable<Query> {
     public Direction getDirection() {
         return _direction;
     }
-
 
     @Override
     public int compareTo(Query o) {

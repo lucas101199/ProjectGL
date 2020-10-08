@@ -3,6 +3,7 @@ package Operative;
 import CC.CommandControl;
 import CC.Direction;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +21,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     private int _currentFloor;
     private  TimerTask _currentTask;
     private int _nbOfFloor;
+    private boolean DoorsIsClosed;
 
     private class GoingUpDownAction extends TimerTask{
         @Override
@@ -63,7 +65,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         resfreshDelay = 100;    //Can be calculated from v_speed
         coolDown = new Timer();
         _nbOfFloor = nbOfFloor;
-
+        DoorsIsClosed = true;
     }
 
     @Override
@@ -113,7 +115,15 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         new Thread(()->{
             var nextF = chooseNextFloor();
             simulateSlowDescent(nextF, mustUpdateFloor(nextF));
-            }).start();
+            DoorsIsClosed = false;
+            int rand = (int) (Math.random() * (7 - 3));
+            try {
+                wait(rand);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            DoorsIsClosed = true;
+        }).start();
     }
 
     /**
@@ -193,5 +203,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         commandControl = cc;
     }
 
-
+    public boolean isDoorsIsClosed() {
+        return DoorsIsClosed;
+    }
 }
