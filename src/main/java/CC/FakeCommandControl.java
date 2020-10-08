@@ -45,11 +45,11 @@ public class FakeCommandControl implements  CommandControl{
     public void updateFloor() {
         if(direction == Direction.Up) {
             numFloor++;
-           // GUI_CC.displayFloor();
+            // GUI_CC.displayFloor();
         }
         else if(direction == Direction.Down) {
             numFloor--;
-           // GUI_CC.displayFloor();
+            // GUI_CC.displayFloor();
         }
     }
 

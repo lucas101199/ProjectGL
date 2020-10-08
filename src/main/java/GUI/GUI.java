@@ -2,9 +2,6 @@ package GUI;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -63,7 +60,7 @@ public class GUI extends JFrame {
 
         emergency = new JButton("Emergency Stop");
         emergency.setMaximumSize(new Dimension(150, emergency.getMinimumSize().height));
-        emergency.addActionListener(new EventHandler_emergencyStop(gui_cc));
+        emergency.addActionListener(new  EventHandler_emergencyStop(gui_cc));
         button_group.add(emergency);
 
         gbc_button = new GridBagConstraints();

@@ -1,9 +1,11 @@
 package Operative;
 
+import CC.CCState;
 import CC.CommandControl;
 import CC.Direction;
 import CC.Event;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +23,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     private int _currentFloor;
     private  TimerTask _currentTask;
     private int _nbOfFloor;
+    private boolean DoorsIsClosed;
 
     private class GoingUpDownAction extends TimerTask{
         @Override
@@ -42,10 +45,15 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     }
 
 
-
     /**
-    @param : vSpeed, approachSpeed are in meters per second and must be positive.
-     **/
+     *
+     * @param vSpeed
+     * @param approachSpeed
+     * @param distanceBetweenFloor
+     * @param nbOfFloor
+     * @param initialFloor
+     * vSpeed, approachSpeed are in meters per second and must be positive.
+     */
     public ImplPourSimulation(double vSpeed , double approachSpeed, double distanceBetweenFloor,
                               int nbOfFloor, int initialFloor){
         assert vSpeed > 0  && approachSpeed > 0 && distanceBetweenFloor > 0: "Error parameter muste be > 0";
@@ -58,7 +66,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         resfreshDelay = 100;    //Can be calculated from v_speed
         coolDown = new Timer();
         _nbOfFloor = nbOfFloor;
-
+        DoorsIsClosed = true;
     }
 
     @Override
@@ -87,6 +95,9 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         }
     }
 
+    /**
+     * Stop the engine and cancel the task
+     */
     @Override
     public void emergencyStop() {
         _currentTask.cancel();
@@ -94,6 +105,9 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         state = StateEngine.Blocked;
     }
 
+    /**
+     * Stop the engine at the next floor
+     */
     @Override
     public void stopNextFloor() {
         if(state != StateEngine.Stopped)
@@ -102,11 +116,24 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         new Thread(()->{
             var nextF = chooseNextFloor();
             simulateSlowDescent(nextF, mustUpdateFloor(nextF));
-            }).start();
+            DoorsIsClosed = false;
+            int rand = (int) (Math.random() * (7 - 3));
+            try {
+                wait(rand);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            DoorsIsClosed = true;
+            commandControl.handleEvent(Event.READY_TO_GO);
+        }).start();
     }
 
+    /**
+     *
+     * @return the number of floor
+     */
     int chooseNextFloor(){
-        var nextFloor = 0;
+        int nextFloor = 0;
         if(state == StateEngine.goingUp)
             nextFloor = _currentFloor + 1;
         else if(state == StateEngine.goingDown)
@@ -115,12 +142,22 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         return  nextFloor;
     }
 
+    /**
+     *
+     * @param nextF
+     * @return false if the next floor is equal to the current floor otherwise return true
+     */
     boolean mustUpdateFloor(int nextF){
         if(nextF == _currentFloor)
             return false;
         return true;
     }
 
+    /**
+     *
+     * @param nextF
+     * @param updateFloor
+     */
     void simulateSlowDescent(int nextF, boolean updateFloor){
         var distanceRemaining =Math.abs(nextF * _distanceBtwFloor - distanceEllapsed);
         var time = distanceRemaining / _approachSpeed;
@@ -132,6 +169,11 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         updateElevatorState(updateFloor, distanceRemaining);
     }
 
+    /**
+     *
+     * @param updateFloor
+     * @param distanceTraveled
+     */
     void updateElevatorState(boolean updateFloor, double distanceTraveled){
         if(updateFloor)
             updateFloor();
@@ -144,6 +186,9 @@ public class ImplPourSimulation implements InterfaceMaterielle{
 
     }
 
+    /**
+     * increment or decrement the number of floor
+     */
     void updateFloor(){
         System.out.println("send !");
         commandControl.handleEvent(Event.NEW_FLOOR);
@@ -164,5 +209,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         commandControl = cc;
     }
 
-
+    public boolean isDoorsIsClosed() {
+        return DoorsIsClosed;
+    }
 }
