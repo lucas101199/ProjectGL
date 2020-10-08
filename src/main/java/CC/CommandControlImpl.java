@@ -1,5 +1,6 @@
 package CC;
 
+import GUI.GUI_CC;
 import Operative.InterfaceMaterielle;
 
 import java.util.ArrayList;
@@ -66,8 +67,10 @@ public class CommandControlImpl implements CommandControl{
     public void handleEvent(Event event) {
         ArrayList<Connection> connectionsToState = _stateEventTable.get(_state);
         for(Connection c : connectionsToState){
-            if(c.event == event)
+            if(c.event == event) {
                 c.action.accept(event.userQuery);
+                GUI_CC.displayFloor();
+            }
         }
     }
 
