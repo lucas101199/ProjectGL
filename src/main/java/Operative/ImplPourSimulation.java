@@ -2,6 +2,7 @@ package Operative;
 
 import CC.CommandControl;
 import CC.Direction;
+import CC.Event;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,7 +28,6 @@ public class ImplPourSimulation implements InterfaceMaterielle{
             if((distanceEllapsed < (1./3) * _distanceBtwFloor && state == StateEngine.goingDown )|| (distanceEllapsed > (_nbOfFloor-1)*_distanceBtwFloor
                                                                                    + (2./3)*_distanceBtwFloor && state == StateEngine.goingUp))
             {
-                System.out.println("OUFFFF" + (_nbOfFloor-1)*_distanceBtwFloor + (2./3)*_distanceBtwFloor);
                 _currentTask.cancel();
                 stopNextFloor();
             }
@@ -35,7 +35,7 @@ public class ImplPourSimulation implements InterfaceMaterielle{
                 distanceEllapsed += _vSpeed * resfreshDelay;
             else if(state == StateEngine.goingDown)
                 distanceEllapsed -= _vSpeed * resfreshDelay;
-            System.out.println(distanceEllapsed);
+            System.out.println("Distance ellapsed :" + distanceEllapsed);
             if((int)(distanceEllapsed / _distanceBtwFloor) != _currentFloor)
                 updateFloor();
         }
@@ -135,19 +135,23 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     void updateElevatorState(boolean updateFloor, double distanceTraveled){
         if(updateFloor)
             updateFloor();
-        distanceEllapsed += distanceTraveled;
+        if(state == StateEngine.goingUp)
+            distanceEllapsed += distanceTraveled;
+        else if(state == StateEngine.goingDown)
+            distanceEllapsed -= distanceTraveled;
         state = StateEngine.Stopped;
+        commandControl.handleEvent(Event.STOPPED);
+
     }
 
     void updateFloor(){
-        if(state == StateEngine.goingUp) {
+        System.out.println("send !");
+        commandControl.handleEvent(Event.NEW_FLOOR);
+        if(state == StateEngine.goingUp)
             _currentFloor++;
-            commandControl.updateFloor();
-        }
-        else if(state == StateEngine.goingDown ) {
+        else if(state == StateEngine.goingDown )
             _currentFloor--;
-            commandControl.updateFloor();
-        }
+
         assert _currentFloor >= 0 : "Error current floor must be positive !";
     }
 

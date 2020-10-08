@@ -59,7 +59,12 @@ public class FakeCommandControl implements  CommandControl{
     }
 
     @Override
-    public State getState() {
+    public CCState getState() {
+        return null;
+    }
+
+    @Override
+    public Direction getDirection() {
         return null;
     }
 
