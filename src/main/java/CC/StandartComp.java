@@ -22,14 +22,9 @@ public class StandartComp implements Comparator<Query> {
             _previousDirection = Direction.Up;
 
         if(_previousDirection == Direction.Up)
-            return Integer.valueOf(query1.getFloor()).compareTo(Integer.valueOf(query2.getFloor()));
+            return Integer.compare(query1.getFloor(), query2.getFloor());
         else if(_previousDirection == Direction.Down) {
-            if(query1.getFloor() < query2.getFloor())
-                return 1;
-            else if(query1.getFloor() == query2.getFloor())
-                return 0;
-            else
-                return -1;
+            return Integer.compare(query2.getFloor(), query1.getFloor());
         }
         else
             assert false : "Erreur never go here !";
