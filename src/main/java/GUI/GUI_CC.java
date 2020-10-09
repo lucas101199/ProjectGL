@@ -1,12 +1,13 @@
 package GUI;
 
-import CC.CommandControlImpl;
-import CC.Direction;
+import CC.*;
 import CC.Event;
-import CC.FakeCommandControl;
-import CC.Query;
 import Operative.ImplPourSimulation;
 import Operative.InterfaceMaterielle;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 
 public class GUI_CC {
 
@@ -19,8 +20,11 @@ public class GUI_CC {
         cci = new CommandControlImpl(simulation, 0);
     }
 
+    /**
+     * Raise an event when the user press the button emergency stop
+     */
     public void emergency_Stop() {
-        //cci.
+        cci.handleEvent(Event.EMMERGENCY_STOP);
     }
 
     /**
@@ -30,7 +34,9 @@ public class GUI_CC {
      * Add a query to the queue when the user is outside of the elevator
      */
     public void sendQuery(int floor, String direction) {
-        Direction _direction = cci.DirElevator(direction);
+        Direction _direction;
+        if (direction.equals("Up")) _direction = Direction.Up;
+        else _direction = Direction.Down;
         cci.handleEvent(Event.USER_REQUEST.linkQuery(new Query(floor, _direction)));
     }
 
@@ -40,8 +46,7 @@ public class GUI_CC {
      * Add a query to the queue when the user is inside of the elevator
      */
     public void send_Query(int floor) {
-        Direction direction = cci.DirectionElevator(floor);
-        cci.handleEvent(Event.USER_REQUEST.linkQuery(new Query(floor, direction)));
+        cci.handleEvent(Event.USER_REQUEST.linkQuery(new Query(floor)));
     }
 
     /**
@@ -50,5 +55,17 @@ public class GUI_CC {
     public static void displayFloor() {
         int floor = cci.getFloor();
         gui.displayFloor(floor);
+        if (gui.IsButtonTurnOn(floor) && cci.getState() == CCState.IS_STOPPED)
+            gui.turnOffButton(String.valueOf(floor));
+    }
+
+    /**
+     * Change the border in yellow when a button is pressed by the user
+     * @param floor
+     */
+    public void light_Button(String floor) {
+        Border yellowLine = BorderFactory.createLineBorder(Color.YELLOW);
+        JButton buttonToLight = gui.getButton(Integer.parseInt(floor));
+        buttonToLight.setBorder(yellowLine);
     }
 }

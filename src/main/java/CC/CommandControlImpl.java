@@ -1,5 +1,6 @@
 package CC;
 
+import GUI.GUI_CC;
 import Operative.InterfaceMaterielle;
 
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class CommandControlImpl implements CommandControl{
             }
             _elevator.stopNextFloor();
         }
-
+        GUI_CC.displayFloor();
     }
 
     private void waitToInitiateUpOrDown(){
@@ -117,8 +118,8 @@ public class CommandControlImpl implements CommandControl{
     public void handleEvent(Event event) {
         if(!_queries.isEmpty())
             _queries.add(_queries.poll());  //Update the priorityQueue.
-        var connectionsToState = _stateEventTable.get(_state);
-        for(var c : connectionsToState){
+        ArrayList<Connection> connectionsToState = _stateEventTable.get(_state);
+        for(Connection c : connectionsToState){
             if(c.event == event) {
                 System.out.println(event.name());
                 c.action.accept(event.userQuery);

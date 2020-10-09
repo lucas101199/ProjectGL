@@ -95,6 +95,10 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Add a button to the GUI
+     * @param name_button
+     */
     public void add_Button(String name_button) {
         JButton button = new JButton(name_button);
         button.setMaximumSize(new Dimension(150,button.getMinimumSize().height));
@@ -105,8 +109,40 @@ public class GUI extends JFrame {
         button_group.updateUI();
     }
 
+    /**
+     * Set the text in the screen with the floor
+     * @param numFloor
+     */
     public void displayFloor(int numFloor) {
         screen.setText(String.valueOf(numFloor));
         screen.updateUI();
     }
-}
+
+    /**
+     *
+     * @param floor
+     * @return the button corresponding to the floor
+     */
+    public JButton getButton(int floor) {
+        return button_floor.get(floor);
+    }
+
+    /**
+     * Turn the button that has been pressed by the user by changing the border in yellow
+     * @param floor
+     */
+    public void turnOffButton(String floor) {
+        JButton buttonToLight = getButton(Integer.parseInt(floor));
+        buttonToLight.setBorderPainted(true);
+    }
+
+    /**
+     * @param floor which is passed by the elevator
+     * @return true if the button has been pressed
+     */
+    public boolean IsButtonTurnOn(int floor) {
+        Border yellowLine = BorderFactory.createLineBorder(Color.YELLOW);
+        JButton button = getButton(floor);
+        return button.getBorder().equals(yellowLine);
+    }
+ }
