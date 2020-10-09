@@ -13,7 +13,12 @@ public class StandartComp implements Comparator<Query> {
         _previousDirection = _cc.getDirection();
     }
 
-
+    /**
+     * Comparison function for the prioritized queue
+     * @param query1
+     * @param query2
+     * @return
+     */
     @Override
     public int compare(Query query1, Query query2) {
         if(_cc.getDirection() != Direction.None)

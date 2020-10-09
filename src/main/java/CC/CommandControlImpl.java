@@ -130,6 +130,10 @@ public class CommandControlImpl implements CommandControl{
                 _state = CCState.WAITING;
     }
 
+    /**
+     * Search in the stateEventTable if the event is already created and accept the query of the user
+     * @param event
+     */
     @Override
     public void handleEvent(Event event) {
         ArrayList<Connection> connectionsToState = _stateEventTable.get(_state);
@@ -146,16 +150,28 @@ public class CommandControlImpl implements CommandControl{
 
     }
 
+    /**
+     * get the actual floor of the elevator
+     * @return int floor
+     */
     @Override
     public int getFloor() {
         return _floor;
     }
 
+    /**
+     * get the state of the command control
+     * @return CCState state
+     */
     @Override
     public CCState getState() {
         return _state;
     }
 
+    /**
+     *
+     * @return Direction direction
+     */
     @Override
     public Direction getDirection() {
         return _direction;

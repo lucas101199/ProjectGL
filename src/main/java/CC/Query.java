@@ -36,12 +36,16 @@ public class Query implements Comparable<Query> {
 
     /**
      *
-     * @return
+     * @return the floor of the query
      */
     public int getFloor() {
         return _floor;
     }
 
+    /**
+     *
+     * @return the direction of the query
+     */
     public Direction getDirection() {
         return _direction;
     }
