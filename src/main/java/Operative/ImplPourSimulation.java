@@ -211,14 +211,26 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     }
 
     //Pour tester le bon fonctionnement du matériel
+    /**
+     *
+     * @return StateEngine
+     */
     public StateEngine getStateEngine(){
         return state;
     }
 
+    /**
+     *
+     * @param cc
+     */
     public void setCommandControl(CommandControl cc){
         commandControl = cc;
     }
 
+    /**
+     *
+     * @return true if the door is closed
+     */
     public boolean isDoorsIsClosed() {
         return DoorsIsClosed;
     }

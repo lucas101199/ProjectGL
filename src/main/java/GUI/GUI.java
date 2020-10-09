@@ -15,6 +15,10 @@ public class GUI extends JFrame {
     private JComboBox<String> floorQueries, directionRequested;
     public GUI_CC gui_cc;
 
+    /**
+     *
+     * @param gui_cc
+     */
     public GUI(GUI_CC gui_cc) {
 
         this.gui_cc = gui_cc;

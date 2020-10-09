@@ -8,6 +8,12 @@ public class EventHandler_queries implements EventHandler {
     public JComboBox<String> floor, direction;
     public GUI_CC gui_cc;
 
+    /**
+     *
+     * @param floor
+     * @param direction
+     * @param gui_cc
+     */
     public EventHandler_queries(JComboBox<String> floor, JComboBox<String> direction, GUI_CC gui_cc) {
         this.floor = floor;
         this.direction = direction;

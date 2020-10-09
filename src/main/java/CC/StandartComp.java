@@ -8,6 +8,10 @@ public class StandartComp implements Comparator<Query> {
     private  CommandControl _cc;
     private Direction _previousDirection;
 
+    /**
+     *
+     * @param cc
+     */
     public StandartComp(CommandControl cc){
         _cc = cc;
         _previousDirection = _cc.getDirection();

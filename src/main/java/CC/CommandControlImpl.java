@@ -19,6 +19,11 @@ public class CommandControlImpl implements CommandControl{
     private Query _currentQuery;
 
     private class Connection{
+        /**
+         *
+         * @param e
+         * @param a
+         */
         public Connection(Event e,Consumer<Query> a){
             event = e;
             action = a;
@@ -27,6 +32,11 @@ public class CommandControlImpl implements CommandControl{
         public Consumer<Query> action;
     }
 
+    /**
+     *
+     * @param elevator
+     * @param initFloor
+     */
     public CommandControlImpl(InterfaceMaterielle elevator, int initFloor){
         _elevator = elevator;
         _floor = initFloor;
@@ -55,6 +65,12 @@ public class CommandControlImpl implements CommandControl{
         addEntryToStateEventTable(CCState.WAITING, Event.USER_REQUEST, q->{_queries.add(q);});
     }
 
+    /**
+     *
+     * @param state
+     * @param ev
+     * @param action
+     */
     private void addEntryToStateEventTable(CCState state, Event ev, Consumer<Query> action){
         if(!_stateEventTable.keySet().contains(state))
             _stateEventTable.put(state, new ArrayList<>());
@@ -62,6 +78,10 @@ public class CommandControlImpl implements CommandControl{
     }
 
     //TODO copy all old element in the new Queue.
+    /**
+     * set the strategy with a specific comparator
+     * @param comp
+     */
     public void setStrategy(Comparator<Query> comp){
         _queries = new PriorityQueue<>(comp);
     }
@@ -117,6 +137,10 @@ public class CommandControlImpl implements CommandControl{
             _elevator.stopNextFloor();}
     }
 
+    /**
+     *
+     * @param query
+     */
     private void addQueryAndAdaptDecision(Query query){
         _queries.add(query);
         goToNextFloor();

@@ -7,6 +7,10 @@ public class Query implements Comparable<Query> {
     private Direction _direction;
     private boolean _isEmergencyStop;
 
+    /**
+     * Create a new query with only a floor number
+     * @param floor
+     */
     public Query(int floor) {
         _floor = floor;
         _direction = Direction.None;
@@ -50,6 +54,11 @@ public class Query implements Comparable<Query> {
         return _direction;
     }
 
+    /**
+     *
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(Query o) {
         return 0;

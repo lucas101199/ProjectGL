@@ -12,6 +12,11 @@ public class FakeCommandControl implements  CommandControl{
     private Direction direction;
     public PriorityQueue<Query> queriesReceived;
 
+    /**
+     *
+     * @param elevator
+     * @param initFloor
+     */
     public FakeCommandControl(ImplPourSimulation elevator, int initFloor){
         this.elevator = elevator;
         this.elevator.setCommandControl(this);
@@ -20,6 +25,10 @@ public class FakeCommandControl implements  CommandControl{
         this.queriesReceived = new PriorityQueue<>();
     }
 
+    /**
+     *
+     * @param event
+     */
     @Override
     public void handleEvent(Event event) {
         /*
@@ -53,21 +62,37 @@ public class FakeCommandControl implements  CommandControl{
         }
     }
 
+    /**
+     *
+     * @return int number of the floor
+     */
     @Override
     public int getFloor() {
         return numFloor;
     }
 
+    /**
+     *
+     * @return CCState
+     */
     @Override
     public CCState getState() {
         return null;
     }
 
+    /**
+     *
+     * @return Direction
+     */
     @Override
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     *
+     * @param direc
+     */
     public void setDirection(Direction direc){
         direction = direc;
     }
