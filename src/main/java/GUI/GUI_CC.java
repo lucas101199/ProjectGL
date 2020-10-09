@@ -30,8 +30,8 @@ public class GUI_CC {
      * Add a query to the queue when the user is outside of the elevator
      */
     public void sendQuery(int floor, String direction) {
-        Direction _direction = cci.DirElevator(direction);
-        cci.handleEvent(Event.USER_REQUEST.linkQuery(new Query(floor, _direction)));
+       /* Direction _direction = cci.DirElevator(direction);
+        cci.handleEvent(Event.USER_REQUEST.linkQuery(new Query(floor, _direction)));*/
     }
 
     /**
@@ -40,8 +40,8 @@ public class GUI_CC {
      * Add a query to the queue when the user is inside of the elevator
      */
     public void send_Query(int floor) {
-        Direction direction = cci.DirectionElevator(floor);
-        cci.handleEvent(Event.USER_REQUEST.linkQuery(new Query(floor, direction)));
+       /* Direction direction = cci.DirectionElevator(floor);
+        cci.handleEvent(Event.USER_REQUEST.linkQuery(new Query(floor, direction)));*/
     }
 
     /**

@@ -32,26 +32,26 @@ public class CommandControlImpl implements CommandControl{
         _stateEventTable = new HashMap<>();
         _queries = new PriorityQueue<>();
         _state = CCState.IS_STOPPED;
-
+        _direction = Direction.None;
         _elevator.setCommandControl(this);
 
         addEntryToStateEventTable(CCState.IS_GOING_UP, Event.NEW_FLOOR, q->{updateFloorAndStopIfNecessary();});
         addEntryToStateEventTable(CCState.IS_GOING_UP, Event.USER_REQUEST, q->{_queries.add(q);});
         addEntryToStateEventTable(CCState.IS_GOING_UP, Event.EMMERGENCY_STOP, q->{_state = CCState.IS_BLOCKED;});
-        addEntryToStateEventTable(CCState.IS_GOING_UP, Event.STOPPED, q->{_state = CCState.IS_STOPPED;});
+        addEntryToStateEventTable(CCState.IS_GOING_UP, Event.STOPPED, q->{_state = CCState.IS_STOPPED; _currentQuery = null;});
 
         addEntryToStateEventTable(CCState.IS_GOING_DOWN, Event.NEW_FLOOR, q->{updateFloorAndStopIfNecessary();});
         addEntryToStateEventTable(CCState.IS_GOING_DOWN, Event.USER_REQUEST, q->{_queries.add(q);});
         addEntryToStateEventTable(CCState.IS_GOING_DOWN, Event.EMMERGENCY_STOP, q->{_state = CCState.IS_BLOCKED;});
-        addEntryToStateEventTable(CCState.IS_GOING_DOWN, Event.STOPPED, q->{_state = CCState.IS_STOPPED;});
+        addEntryToStateEventTable(CCState.IS_GOING_DOWN, Event.STOPPED, q->{_state = CCState.IS_STOPPED; _currentQuery = null;});
 
-        addEntryToStateEventTable(CCState.IS_STOPPED, Event.READY_TO_GO, q->{goToNextFloor();});
+        addEntryToStateEventTable(CCState.IS_STOPPED, Event.READY_TO_GO, q->{startOrWait();});
         addEntryToStateEventTable(CCState.IS_STOPPED, Event.EMMERGENCY_STOP, q->{_state = CCState.IS_BLOCKED;});
         addEntryToStateEventTable(CCState.IS_STOPPED, Event.USER_REQUEST, q->{_queries.add(q);});
-    /*
-        addEntryToStateEventTable(CCState.IS_READY_TO_GO, Event.EMMERGENCY_STOP, q->{_state = CCState.IS_BLOCKED;});
-        addEntryToStateEventTable(CCState.IS_READY_TO_GO, Event.READY_TO_GO, q->{goToNextFloor();});
-        addEntryToStateEventTable(CCState.IS_READY_TO_GO, Event.USER_REQUEST, q->{_queries.add(q);});*/
+
+        addEntryToStateEventTable(CCState.WAITING, Event.EMMERGENCY_STOP, q->{_state = CCState.IS_BLOCKED;});
+        addEntryToStateEventTable(CCState.WAITING, Event.USER_REQUEST, q->{goToNextFloor();});
+        addEntryToStateEventTable(CCState.WAITING, Event.USER_REQUEST, q->{_queries.add(q);});
     }
 
     private void addEntryToStateEventTable(CCState state, Event ev, Consumer<Query> action){
@@ -66,7 +66,10 @@ public class CommandControlImpl implements CommandControl{
     }
 
     private void goToNextFloor(){
+        if(_currentQuery != null)
+            _queries.add(_currentQuery);
         _currentQuery = _queries.poll();
+
         if(_currentQuery.getFloor() > _floor + 1) {
             _elevator.Up();
             _state = CCState.IS_GOING_UP;
@@ -102,9 +105,9 @@ public class CommandControlImpl implements CommandControl{
     private void updateFloorAndStopIfNecessary(){
         System.out.println("Stop Next Floor !");
 
-        if(_state == CCState.IS_GOING_UP)
+        if(_direction == Direction.Up)
             _floor++;
-        else if(_state == CCState.IS_GOING_DOWN)
+        else if(_direction == Direction.Down)
             _floor--;
 
         if((Math.abs(_currentQuery.getFloor() - _floor) == 1 && _direction == Direction.Up) ||
@@ -113,10 +116,22 @@ public class CommandControlImpl implements CommandControl{
             _elevator.stopNextFloor();}
     }
 
+    private void addQueryAndAdaptDecision(Query query){
+        _queries.add(query);
+        goToNextFloor();
+    }
+
+    private void startOrWait(){
+        System.out.println("Ok !");
+            if(!_queries.isEmpty())
+                goToNextFloor();
+            else
+                _state = CCState.WAITING;
+    }
+
     @Override
     public void handleEvent(Event event) {
-        if(!_queries.isEmpty())
-            _queries.add(_queries.poll());  //Update the priorityQueue.
+
         var connectionsToState = _stateEventTable.get(_state);
         for(var c : connectionsToState){
             if(c.event == event) {

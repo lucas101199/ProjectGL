@@ -116,15 +116,15 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         new Thread(()->{
             var nextF = chooseNextFloor();
             simulateSlowDescent(nextF, mustUpdateFloor(nextF));
-            DoorsIsClosed = false;
+          /*  DoorsIsClosed = false;
             int rand = (int) (Math.random() * (7 - 3));
             try {
-                wait(rand);
+                Thread.sleep(rand);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             DoorsIsClosed = true;
-            commandControl.handleEvent(Event.READY_TO_GO);
+            commandControl.handleEvent(Event.READY_TO_GO);*/
         }).start();
     }
 
