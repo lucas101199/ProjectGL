@@ -65,7 +65,7 @@ public class FakeCommandControl implements  CommandControl{
 
     @Override
     public Direction getDirection() {
-        return null;
+        return direction;
     }
 
     public void setDirection(Direction direc){

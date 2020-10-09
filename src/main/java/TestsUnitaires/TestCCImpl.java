@@ -72,14 +72,47 @@ public class TestCCImpl {
 
 
     @Test
-    public void testFloor1Query(){
-        var elevator = new ImplPourSimulation(3,1,5,5,0);
+    public void testTwoUpRequestFromElevator(){
+        var elevator = new ImplPourSimulation(3,2,5,5,0);
         var cc = new CommandControlImpl(elevator, 0);
         var strat = new StandartComp(cc);
         cc.setStrategy(strat);
-        var ev = Event.USER_REQUEST.linkQuery(new Query(1));
-        cc.handleEvent(ev);
+        cc.handleEvent(Event.USER_REQUEST.linkQuery(new Query(3)));
+        cc.handleEvent(Event.USER_REQUEST.linkQuery(new Query(1)));
+        cc.handleEvent(Event.READY_TO_GO);
 
+        Assert.assertEquals(Direction.Up, cc.getDirection());
+        Assert.assertEquals(CCState.IS_GOING_UP, cc.getState());
+        waitFor(6);
+        Assert.assertEquals(CCState.IS_STOPPED, cc.getState());
+        Assert.assertEquals(1, cc.getFloor());
+
+        cc.handleEvent(Event.READY_TO_GO);
+
+        Assert.assertEquals(Direction.Up, cc.getDirection());
+        Assert.assertEquals(CCState.IS_GOING_UP, cc.getState());
+        waitFor(6);
+        Assert.assertEquals(CCState.IS_STOPPED, cc.getState());
+        Assert.assertEquals(3, cc.getFloor());
+
+        cc.handleEvent(Event.READY_TO_GO);
+        Assert.assertEquals(CCState.WAITING, cc.getState());
+    }
+    @Test
+    public void testQueryPreemptionDuringClimbingFromElevator(){
+        var elevator = new ImplPourSimulation(3,2,5,5,0);
+        var cc = new CommandControlImpl(elevator, 0);
+        var strat = new StandartComp(cc);
+        cc.setStrategy(strat);
+        cc.handleEvent(Event.USER_REQUEST.linkQuery(new Query(3)));
+        cc.handleEvent(Event.READY_TO_GO);
+
+        Assert.assertEquals(Direction.Up, cc.getDirection());
+        waitFor(2);
+        cc.handleEvent(Event.USER_REQUEST.linkQuery(new Query(2)));
+        waitFor(4);
+        Assert.assertEquals(CCState.IS_STOPPED, cc.getState());
+        Assert.assertEquals(2, cc.getFloor());
     }
 
     public void waitFor(int sec){
