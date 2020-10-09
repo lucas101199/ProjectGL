@@ -15,9 +15,8 @@ public class EventHandler_queries implements EventHandler {
     }
 
     /**
-     *
+     * Is trigger when a new query need to be created from the exterior of the elevator
      * @param e
-     * Is trigger when a new query need to be created
      */
     @Override
     public void actionPerformed(ActionEvent e) {

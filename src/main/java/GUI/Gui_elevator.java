@@ -24,14 +24,12 @@ public class Gui_elevator {
             e.printStackTrace();
         }
         ok = true;
-        var c = new PriorityQueue<Integer>((a,b)->{ if(ok){
-                                                    if( a > b) return 1;
-                                                    else if(a < b) return -1;
-                                                    else return 0;}
+        PriorityQueue<Integer> c = new PriorityQueue<Integer>((a,b)->{ if(ok){
+            return a.compareTo(b);
+        }
                                                     else{
-                                                    if(a > b) return -1;
-                                                    else if(a < b) return 1;
-                                                    else return 0;}
+            return b.compareTo(a);
+        }
                                                     });
         c.add(5);
         c.add(1);
