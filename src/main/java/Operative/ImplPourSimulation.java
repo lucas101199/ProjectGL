@@ -26,6 +26,10 @@ public class ImplPourSimulation implements InterfaceMaterielle{
     private boolean DoorsIsClosed;
 
     private class GoingUpDownAction extends TimerTask{
+
+        /**
+         * main function that make the simulate engine to work
+         */
         @Override
         public void run() {
             if((distanceEllapsed < (1./3) * _distanceBtwFloor && state == StateEngine.goingDown )|| (distanceEllapsed > (_nbOfFloor-1)*_distanceBtwFloor
@@ -69,6 +73,9 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         DoorsIsClosed = true;
     }
 
+    /**
+     * Simulate the elevator going up
+     */
     @Override
     public void Up() {
         if(distanceEllapsed < _nbOfFloor * _distanceBtwFloor) {
@@ -82,6 +89,9 @@ public class ImplPourSimulation implements InterfaceMaterielle{
         }
     }
 
+    /**
+     * Simulate the elevator going down
+     */
     @Override
     public void Down() {
         if(distanceEllapsed > 0) {
